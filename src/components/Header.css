@@ -1,0 +1,172 @@
+/**
+ * =================================================================================
+ * header.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the website's main header, including
+ * both the desktop and mobile navigation layouts. It handles the fixed position,
+ * theming, and the responsive behavior of the navigation elements.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Main Header Container --- */
+
+/*
+ * The primary container for the entire header.
+ * Uses flexbox to manage the layout of the logo and navigation.
+ * `position: fixed` keeps the header visible at the top of the screen during scroll.
+ * `backdrop-filter: blur(10px)` provides a frosted glass effect for the background.
+ */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+/*
+ * Styles for the header in the light theme.
+ * The `[data-theme='light']` attribute selector targets the body element.
+ */
+[data-theme='light'] .header {
+    background-color: rgba(240, 242, 245, 0.85);
+    border-bottom: 1px solid var(--lightest-navy);
+}
+
+/*
+ * Styles for the main logo text.
+ */
+.logo {
+    font-weight: 700;
+    color: var(--teal);
+    font-size: 1.5rem;
+}
+
+/*
+ * Container for the navigation items and theme switcher on desktop.
+ */
+.header-right-desktop {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/*
+ * General styling for the navigation list.
+ */
+.header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+/*
+ * Styling for navigation links/buttons.
+ * Uses a <button> element for semantic clickability.
+ */
+.header nav button {
+    background: none;
+    border: none;
+    color: var(--lightest-slate);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/*
+ * Hover effect for navigation buttons.
+ */
+.header nav button:hover {
+    color: var(--teal);
+}
+
+/* --- Mobile Navigation --- */
+
+/*
+ * Styling for the hamburger menu icon.
+ * This is hidden on desktop by default via a media query.
+ */
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    color: var(--teal);
+    cursor: pointer;
+    z-index: 100;
+}
+
+/*
+ * The main container for the mobile menu.
+ * `position: fixed` and `transform: translateX(100%)` are used to
+ * position it off-screen to the right and enable a slide-in transition.
+ */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(60vw, 300px);
+    height: 100vh;
+    background-color: var(--lightest-navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/*
+ * This class is added via JavaScript to slide the mobile menu into view.
+ */
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+/*
+ * Adjustments for the navigation list inside the mobile menu.
+ */
+.mobile-menu nav ul {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+}
+
+/*
+ * Adjustments for the navigation links/buttons inside the mobile menu.
+ */
+.mobile-menu nav button {
+    font-size: 1.5rem;
+    color: var(--slate);
+}
+
+/*
+ * Styling for the theme switcher on mobile.
+ */
+.mobile-theme-switcher {
+    margin-top: 40px;
+}
+
+/* --- Responsive Layout --- */
+
+/*
+ * Media query to adjust the layout for devices with a maximum width of 768px (tablets and phones).
+ * This hides the desktop navigation and shows the hamburger icon.
+ */
+@media (max-width: 768px) {
+    .header-right-desktop {
+        display: none;
+    }
+    .hamburger {
+        display: block;
+    }
+}

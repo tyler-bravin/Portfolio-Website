@@ -1,0 +1,60 @@
+/**
+ * =================================================================================
+ * loader.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the pre-loading screen or "loader."
+ * It ensures the loader covers the entire viewport and includes a pulsing
+ * animation for a placeholder logo, providing visual feedback to the user
+ * while the page content is loading.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Loader Container --- */
+
+/*
+ * The main container for the loader.
+ * `position: fixed` ensures it stays in place over all other content.
+ * It's centered using flexbox to place the loading indicator in the middle of the screen.
+ * `z-index: 10000` places it on top of everything else.
+ */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--navy);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
+/*
+ * Styles for the placeholder logo displayed within the loader.
+ * The border and padding give it a distinct look.
+ * `animation: pulse` applies the pulsating effect.
+ */
+.logo-placeholder {
+    color: var(--teal);
+    font-size: 3rem;
+    font-weight: 700;
+    border: 3px solid var(--teal);
+    padding: 10px 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* --- Animations --- */
+
+/*
+ * The keyframes for the `pulse` animation.
+ * The element scales up and becomes slightly transparent before returning
+ * to its original state, creating a smooth pulsing motion.
+ */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}

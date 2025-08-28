@@ -1,0 +1,121 @@
+/**
+ * =================================================================================
+ * globals.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the global styles for the entire application. It includes
+ * CSS custom properties (variables) for a centralized color palette, base styles
+ * for the body and common elements, and custom scrollbar styles.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Fonts & Root Variables (Dark Theme) --- */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/*
+ * This `:root` selector defines the CSS custom properties for the default,
+ * or dark, theme. These variables are used throughout the application to
+ * maintain a consistent color palette.
+ */
+:root {
+    --navy: #0a192f;
+    --light-navy: #112240;
+    --lightest-navy: #233554;
+    --slate: #8892b0;
+    --light-slate: #a8b2d1;
+    --lightest-slate: #ccd6f6;
+    --white: #e6f1ff;
+    --teal: #64ffda;
+}
+
+/*
+ * These `:root` selectors, combined with the `[data-theme='light']` attribute,
+ * override the default color variables to apply the light theme styles.
+ */
+:root[data-theme='light'] {
+    --navy: #f0eef6;
+    --light-navy: #f8f8f2;
+    --lightest-navy: #e9e5f3;
+    --slate: #5c5470;
+    --light-slate: #352f44;
+    --lightest-slate: #2a2438;
+    --white: #0a192f;
+    --teal: #8d62bf;
+}
+
+/*
+ * This rule applies a gradient background and sets the default text color
+ * specifically when the `data-theme` attribute is set to 'light' on the
+ * document's root element.
+ */
+[data-theme='light'] body {
+    background: linear-gradient(to bottom right, var(--light-navy), var(--lightest-navy), var(--navy));
+    color: var(--light-slate);
+}
+
+/* --- Base & Body Styles --- */
+
+/*
+ * The universal selector `*` applies these styles to all elements.
+ * `margin: 0` and `padding: 0` reset default browser spacing.
+ * `box-sizing: border-box` ensures consistent box model behavior.
+ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*
+ * Base styles for the entire page body.
+ * `background` sets a gradient for the dark theme.
+ * `font-family` imports the Poppins font.
+ * `-webkit-font-smoothing` and `-moz-osx-font-smoothing` improve font rendering.
+ */
+body {
+    background: linear-gradient(to bottom right, #0f172a, #1e3a8a, #1e293b);
+    color: var(--slate);
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * The main application container.
+ * `background-color: transparent` is crucial to allow the particle background
+ * to be visible.
+ * `position: relative` and `z-index: 1` ensure this container sits on top
+ * of the fixed-position particle background.
+ */
+.App {
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Custom Scrollbar --- */
+
+/*
+ * Custom scrollbar styling for Webkit browsers (Chrome, Safari, etc.).
+ * `::-webkit-scrollbar` targets the overall scrollbar.
+ * `::-webkit-scrollbar-track` styles the background of the scrollbar.
+ * `::-webkit-scrollbar-thumb` styles the draggable part of the scrollbar.
+ */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--navy);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--lightest-navy);
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--slate);
+}

@@ -1,0 +1,68 @@
+/**
+ * =================================================================================
+ * App.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the foundational layout for the entire application.
+ * It includes styles for the main container, the content wrapper, and responsive
+ * adjustments to ensure the site looks good on all screen sizes.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Main Application Layout --- */
+
+/*
+ * The primary container for the entire application.
+ * `display: flex` and `flex-direction: column` are used to structure content
+ * vertically, and `min-height: 100vh` ensures the application fills at least
+ * the full height of the viewport.
+ */
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/*
+ * The main content wrapper.
+ * `max-width` prevents the content from becoming too wide on large screens.
+ * `margin: 0 auto` centers the content horizontally.
+ * `padding` adds space on the left and right, which is adjusted for smaller screens.
+ */
+main {
+    padding: 0 150px;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/*
+ * A spacer element to push the main content down, preventing it from being
+ * obscured by the fixed header. The height matches the header's height.
+ */
+.header-spacer {
+    height: 76px;
+}
+
+/* --- Responsive Layout --- */
+
+/*
+ * Media queries to adjust the main content padding for different screen sizes.
+ * The goal is to reduce padding as the screen gets smaller to maximize content space.
+ */
+@media (max-width: 1080px) {
+    main {
+        padding: 0 100px;
+    }
+}
+@media (max-width: 768px) {
+    main {
+        padding: 0 50px;
+    }
+}
+@media (max-width: 480px) {
+    main {
+        padding: 0 25px;
+    }
+}

@@ -1,0 +1,187 @@
+/**
+ * =================================================================================
+ * projects.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the portfolio's projects section. It
+ * primarily focuses on the layout of a horizontal, scrollable grid of project
+ * cards, including styling for individual cards and their content.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Projects Grid --- */
+
+/*
+ * The main container for the project cards.
+ * `display: flex` and `overflow-x: auto` enable horizontal scrolling.
+ * The custom scrollbar styles enhance the look across different browsers.
+ */
+.projects-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+    -webkit-overflow-scrolling: touch; /* Improves scrolling smoothness on iOS */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: var(--lightest-navy) var(--navy); /* For Firefox */
+}
+
+/*
+ * Custom scrollbar styles for Webkit-based browsers (Chrome, Safari).
+ * This section defines the height, track, and thumb of the scrollbar.
+ */
+.projects-grid::-webkit-scrollbar {
+    height: 8px;
+}
+.projects-grid::-webkit-scrollbar-track {
+    background: var(--navy);
+    border-radius: 4px;
+}
+.projects-grid::-webkit-scrollbar-thumb {
+    background: var(--lightest-navy);
+    border-radius: 4px;
+}
+.projects-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--slate);
+}
+
+/* --- Project Card --- */
+
+/*
+ * The individual container for each project.
+ * `flex: 0 0 320px` prevents the cards from growing or shrinking, giving
+ * each a fixed width of 320px.
+ * The `box-shadow` and `transition` properties create a clean, interactive effect.
+ */
+.project-card {
+    flex: 0 0 320px;
+    background-color: var(--light-navy);
+    border-radius: 5px;
+    box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+    height: auto;
+}
+
+/*
+ * Hover effect for the project card, making it lift up slightly.
+ */
+.project-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+}
+
+/* --- Project Image & Placeholder --- */
+
+/*
+ * Common styles for both the project image and its placeholder.
+ * `aspect-ratio` ensures the image maintains a consistent 16:9 ratio.
+ */
+.project-image, .project-image-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/*
+ * Styles for the placeholder when no image is available.
+ */
+.project-image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--navy);
+    color: var(--slate);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* --- Project Content --- */
+
+/*
+ * The internal container for the text and details of the project card.
+ * `flex-grow: 1` allows it to fill the remaining vertical space.
+ */
+.project-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/*
+ * Styling for the project title.
+ */
+.project-content h3 {
+    color: var(--lightest-slate);
+}
+
+/*
+ * Changes the title color on card hover.
+ */
+.project-card:hover .project-content h3 {
+    color: var(--teal);
+}
+
+/*
+ * Container for statistics like stars, forks, etc.
+ * `margin-top: auto` pushes this section to the bottom of the card.
+ */
+.project-stats {
+    margin-top: auto;
+    padding-top: 15px;
+    font-size: 0.85rem;
+    color: var(--slate);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/*
+ * Styling for an individual stat item, ensuring icon and text are aligned.
+ */
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/*
+ * Styling for the list of tags/technologies.
+ */
+.project-tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: var(--slate);
+}
+
+/*
+ * Styling for individual tag list items.
+ */
+.project-tags li {
+    background-color: var(--navy);
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+/* --- Misc. Overrides --- */
+
+/*
+ * Overrides for the `react-responsive-carousel` library styles
+ * to make sure images within a carousel fit the card's dimensions.
+ */
+.carousel .slide img {
+    height: 100%;
+}
+
+.carousel.carousel-slider .control-arrow {
+    opacity: 0.6;
+}

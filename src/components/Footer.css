@@ -1,0 +1,65 @@
+/**
+ * =================================================================================
+ * footer.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the website's footer. It includes
+ * styles for the main footer text and a set of social media links that are
+ * specifically designed to be visible only on smaller, mobile screens.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Main Footer Container --- */
+.footer {
+    padding: 20px 0;
+    text-align: center;
+    color: var(--slate);
+    font-size: 0.9rem;
+    margin-top: 50px; /* Provides separation from the content above */
+}
+
+/* --- Mobile-Only Social Links --- */
+
+/*
+ * Container for social media links in the footer.
+ * This is hidden by default on desktop, as it's assumed that dedicated
+ * social link sidebars are visible. It is made visible via the media query below.
+ */
+.footer-socials {
+    display: none;
+    margin-bottom: 15px;
+}
+
+/*
+ * Styling for individual social media icon links.
+ */
+.footer-socials a {
+    color: inherit; /* Inherits the color from the .footer parent */
+    font-size: 1.5rem;
+    margin: 0 10px; /* Horizontal spacing between icons */
+    transition: all 0.3s ease;
+}
+
+/*
+ * Hover effect for social links to provide visual feedback.
+ * The color changes, and the icon lifts slightly.
+ */
+.footer-socials a:hover {
+    color: var(--teal);
+    transform: translateY(-3px);
+}
+
+
+/* --- Responsive Visibility --- */
+
+/*
+ * Media query for tablet and mobile devices (768px and below).
+ * This makes the footer social links visible on smaller screens where
+ * the primary sidebar links might be hidden.
+ */
+@media (max-width: 768px) {
+    .footer-socials {
+        display: block;
+    }
+}

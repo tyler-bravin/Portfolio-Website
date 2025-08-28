@@ -1,0 +1,75 @@
+/**
+ * =================================================================================
+ * custom-cursor.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet creates a custom cursor effect for the website. It replaces
+ * the default browser cursor with a custom-styled element that animates on hover.
+ * The effect is disabled on smaller screens for better mobile usability.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Base Cursor Setup --- */
+
+/*
+ * Hides the default browser cursor across the entire page,
+ * allowing the custom cursor element to be the primary pointer.
+ */
+body {
+    cursor: none;
+}
+
+/*
+ * Defines the appearance and behavior of the custom cursor element.
+ */
+.cursor {
+    /* Dimensions and shape */
+    width: 25px;
+    height: 25px;
+    border: 1px solid var(--teal);
+    border-radius: 50%; /* Creates a perfect circle */
+
+    /* Positioning */
+    position: fixed; /* Positions relative to the viewport */
+    /* Centers the element on the actual cursor position */
+    transform: translate(-50%, -50%);
+    /* Allows mouse events (like clicks) to pass through to elements underneath */
+    pointer-events: none;
+    /* Ensures the cursor is always on top of other content */
+    z-index: 9999;
+
+    /* Animation */
+    /* Smooths out changes to size and color for a fluid feel */
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+/* --- Hover State --- */
+
+/*
+ * Styles applied to the cursor when it is hovering over an interactive
+ * element (e.g., a link or button). This class is typically added via JavaScript.
+ */
+.cursor.hovering {
+    width: 50px;  /* Enlarges the cursor */
+    height: 50px;
+    /* Adds a subtle background fill to indicate interactivity */
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+/* --- Responsive Design --- */
+
+/*
+ * Media query for tablets and mobile devices (768px and below).
+ * Custom cursors can be imprecise on touch devices, so we disable it.
+ */
+@media (max-width: 768px) {
+    /* Hides the custom cursor element entirely */
+    .cursor {
+        display: none;
+    }
+    /* Restores the default system cursor for better usability on smaller screens */
+    body {
+        cursor: default;
+    }
+}

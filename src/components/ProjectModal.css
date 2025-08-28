@@ -1,0 +1,260 @@
+/**
+ * =================================================================================
+ * modal.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for a reusable modal component. It includes
+ * styles for the overlay backdrop, the modal content container, and various
+ * elements within the modal, such as headings, buttons, and a markdown-rendered
+ * README section.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Modal Backdrop --- */
+
+/*
+ * The full-screen overlay that appears behind the modal.
+ * `position: fixed` ensures it covers the entire viewport.
+ * `background-color` creates a semi-transparent dark overlay.
+ * `z-index` is set high to ensure it's on top of all other page content.
+ */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* --- Modal Content --- */
+
+/*
+ * The main container for the modal's content.
+ * It has a fixed width and height with `max-width` and `max-height` constraints
+ * to ensure it's responsive.
+ * `overflow-y: auto` enables vertical scrolling for content that exceeds the height.
+ */
+.modal-content {
+    background-color: var(--light-navy);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    height: 80%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+}
+
+/*
+ * Styles for the absolute-positioned close button at the top-right of the modal.
+ */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--slate);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/*
+ * Hover effect for the close button, changing its color for visual feedback.
+ */
+.close-button:hover {
+    color: var(--teal);
+}
+
+/*
+ * General styling for headings and descriptions inside the modal.
+ */
+.modal-content h2 {
+    color: var(--lightest-slate);
+    margin-bottom: 5px;
+}
+
+.modal-description {
+    color: var(--slate);
+    margin-bottom: 20px;
+}
+
+/*
+ * Styling for the GitHub link button, which uses flexbox for icon alignment.
+ */
+.github-link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--teal);
+    background-color: transparent;
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/*
+ * Hover effect for the GitHub link button in the dark theme.
+ */
+.github-link-button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+/*
+ * Hover effect for the GitHub link button in the light theme.
+ */
+[data-theme='light'] .github-link-button:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/*
+ * Styling for the horizontal rule used to separate sections within the modal.
+ */
+.modal-content hr {
+    border: none;
+    border-top: 1px solid var(--lightest-navy);
+    margin: 20px 0;
+}
+
+/* --- Readme Content & Markdown Styles --- */
+
+/*
+ * General styling for the markdown-rendered content.
+ */
+.readme-content {
+    color: var(--light-slate);
+    line-height: 1.6;
+}
+
+/*
+ * Styles for Markdown headings (h1, h2, h3) to ensure consistent appearance.
+ * The `border-bottom` provides a clear separation.
+ */
+.readme-content h1, .readme-content h2, .readme-content h3 {
+    color: var(--lightest-slate);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--lightest-navy);
+    padding-bottom: 5px;
+}
+
+/*
+ * Spacing for paragraphs and list items.
+ */
+.readme-content p, .readme-content li {
+    margin-bottom: 10px;
+}
+
+/*
+ * Styling for inline code snippets.
+ */
+.readme-content code {
+    background-color: var(--navy);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+/*
+ * Styling for code blocks (preformatted text).
+ */
+.readme-content pre {
+    background-color: var(--navy);
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+/*
+ * Styling for links within the markdown content.
+ */
+.readme-content a {
+    color: var(--teal);
+}
+
+/* --- Modal Footer & Buttons --- */
+
+/*
+ * A footer container for modal-specific buttons.
+ * `justify-content: flex-end` pushes content to the right.
+ */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--lightest-navy);
+}
+
+/*
+ * Styles for the close button in the footer.
+ */
+.close-button-bottom {
+    color: var(--teal);
+    background-color: transparent;
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/*
+ * Hover effects for the bottom close button.
+ */
+.close-button-bottom:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+[data-theme='light'] .close-button-bottom:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* --- Slideshow Container --- */
+
+/*
+ * Wrapper for the slideshow component, providing margins and border styling.
+ * `overflow: hidden` ensures the corners are rounded.
+ */
+.slideshow-container {
+    margin: 20px 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/*
+ * Overrides for the `react-responsive-carousel` library styles
+ * to make images fit well within the modal.
+ */
+.carousel .slide img {
+    background-color: var(--navy);
+    object-fit: contain;
+    max-height: 400px;
+}
+
+/*
+ * Styles for the navigation arrows of the carousel.
+ */
+.carousel .control-arrow, .carousel.carousel-slider .control-arrow {
+    opacity: 0.6;
+}
+
+/*
+ * Hover effect for carousel arrows to increase visibility.
+ */
+.carousel .control-arrow:hover {
+    opacity: 1;
+}

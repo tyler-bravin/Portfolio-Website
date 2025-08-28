@@ -1,0 +1,37 @@
+/**
+ * =================================================================================
+ * theme-switcher.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the theme switcher button, which allows
+ * users to toggle between light and dark modes. It includes styles for the
+ * button's appearance and a subtle hover animation.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/*
+ * The main button for the theme switcher.
+ * `background: none` and `border: none` make it look like a seamless icon.
+ * `display: flex` with alignment properties ensures the icon is perfectly centered.
+ * A `transform` transition is added to create a smooth animation on hover.
+ */
+.theme-switcher {
+    background: none;
+    border: none;
+    color: var(--teal);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+/*
+ * A hover effect that rotates the icon 15 degrees, providing visual feedback.
+ */
+.theme-switcher:hover {
+    transform: rotate(15deg);
+}

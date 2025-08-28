@@ -1,0 +1,151 @@
+/**
+ * =================================================================================
+ * hero.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the main hero section of the website.
+ * It's designed to occupy the full viewport height and centrally align its
+ * content, ensuring the section is the first thing a user sees upon arrival.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Hero Section Container --- */
+
+/*
+ * Styles for the main hero section.
+ * `min-height: 100vh` ensures the section fills the entire screen vertically.
+ * Flexbox is used to center the content vertically within the container.
+ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/*
+ * Main introductory paragraph, often colored to stand out.
+ */
+.hero p {
+    color: var(--teal);
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/*
+ * The main heading, which uses `clamp()` to scale its size relative to the viewport.
+ */
+.hero h1 {
+    font-size: clamp(40px, 8vw, 80px);
+    color: var(--lightest-slate);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/*
+ * The secondary heading, also using `clamp()` for responsive font sizing.
+ */
+.hero h2 {
+    font-size: clamp(30px, 7vw, 70px);
+    color: var(--slate);
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+/*
+ * Styles for the paragraph containing the hero section's descriptive text.
+ * The `!important` rule is used to ensure these styles are not overridden.
+ */
+.hero-description {
+    max-width: 550px;
+    color: var(--slate) !important;
+    font-size: 1.1rem !important;
+}
+
+/*
+ * A utility class for highlighting specific text with the accent color.
+ */
+.highlight {
+    color: var(--teal);
+}
+
+/*
+ * Styles for the location text and icon.
+ * `display: flex` and `gap` are used to align the icon and text horizontally.
+ */
+.hero-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 30px;
+    color: var(--slate);
+    font-size: 1rem;
+}
+
+/*
+ * Styles for the SVG icon within the location container.
+ */
+.hero-location svg {
+    color: var(--teal);
+}
+
+/*
+ * Container for any buttons in the hero section, providing top margin.
+ */
+.hero-buttons {
+    margin-top: 40px;
+}
+
+/*
+ * General styling for a common button component.
+ */
+.button {
+    color: var(--teal);
+    background-color: transparent;
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/*
+ * Hover effect for the button in the dark theme, which changes the background color.
+ */
+.button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+/*
+ * Hover effect for the button specifically in the light theme.
+ */
+[data-theme='light'] .button:hover {
+    background-color: rgba(141, 98, 191, 0.1);
+}
+
+/* --- Theming & Responsiveness --- */
+
+/*
+ * A media query to apply specific heading colors for the light theme,
+ * especially when the user's system preference is for a light color scheme.
+ */
+@media (prefers-color-scheme: light) {
+    [data-theme='light'] .hero h1,
+    [data-theme='light'] .hero h2 {
+        color: var(--lightest-slate);
+    }
+}
+
+/*
+ * A media query to adjust the top padding for the hero section
+ * on smaller screens with limited vertical space.
+ */
+@media (max-height: 600px) {
+    .hero {
+        padding-top: 120px;
+    }
+}

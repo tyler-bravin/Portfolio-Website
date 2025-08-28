@@ -1,0 +1,98 @@
+/**
+ * =================================================================================
+ * sidebar.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the fixed sidebars on the left and right
+ * of the main content. It includes styles for social media icons, an email link,
+ * and a vertical line, all of which are hidden on smaller screens.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Sidebar Container --- */
+
+/*
+ * The main container for the sidebars.
+ * `position: fixed` ensures it stays in place as the user scrolls.
+ * Flexbox is used to align the contents vertically.
+ * `width: 40px` gives it a slim, vertical profile.
+ */
+.sidebar {
+    width: 40px;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    color: var(--slate);
+}
+
+/*
+ * Specific placement for the left-aligned sidebar.
+ */
+.sidebar.left {
+    left: 40px;
+}
+
+/*
+ * Specific placement for the right-aligned sidebar.
+ */
+.sidebar.right {
+    right: 40px;
+}
+
+/* --- Links & Icons --- */
+
+/*
+ * General styling for links (icons) within the sidebar.
+ * `padding` is added to increase the clickable area.
+ */
+.sidebar a {
+    font-size: 1.3rem;
+    color: inherit; /* Inherits the color from the parent `.sidebar` */
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+/*
+ * Hover effect for the sidebar links, changing color and lifting slightly.
+ */
+.sidebar a:hover {
+    color: var(--teal);
+    transform: translateY(-5px);
+}
+
+/*
+ * Styling for the vertical line that separates the links/email from the edge.
+ */
+.sidebar .line {
+    height: 90px;
+    width: 1px;
+    background-color: var(--slate);
+}
+
+/*
+ * Specific styling for the vertical email link.
+ * `writing-mode: vertical-rl` rotates the text to display it vertically.
+ * The `!important` rule ensures the font size is not overridden.
+ */
+.email-link {
+    writing-mode: vertical-rl;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.1em;
+    padding: 10px;
+}
+
+/* --- Responsive Layout --- */
+
+/*
+ * Media query to hide the sidebars entirely on smaller screens (max-width 768px),
+ * where vertical space is limited.
+ */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}

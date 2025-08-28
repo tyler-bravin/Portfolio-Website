@@ -1,0 +1,83 @@
+/**
+ * =================================================================================
+ * contact.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the "Contact" section. It includes
+ * styles for the section layout, typography, and the call-to-action button.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Main Section Container --- */
+
+/*
+ * Styles for the main 'Contact' section wrapper.
+ * Centers the text, applies vertical padding, and sets a maximum width
+ * to maintain readability, centering the block on the page.
+ */
+.contact {
+    padding: 100px 0;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- Typography --- */
+
+/*
+ * Styles for the smaller title or pre-heading above the main heading.
+ */
+.contact-title {
+    color: var(--teal);
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+/*
+ * Styles for the main heading of the contact section.
+ * Uses the clamp() function for a fluid font size that scales with the
+ * viewport width, but stays within a defined min (30px) and max (50px) size.
+ */
+.contact h3 {
+    font-size: clamp(30px, 5vw, 50px);
+    color: var(--lightest-slate);
+    margin-bottom: 15px;
+}
+
+/*
+ * Styles for the main descriptive paragraph in the contact section.
+ */
+.contact p {
+    color: var(--light-slate);
+    margin-bottom: 40px; /* Provides ample space before the button */
+}
+
+/* --- Call-to-Action Button --- */
+
+/*
+ * Defines the style for the primary contact button.
+ * This creates a "ghost button" effect with a transparent background
+ * and a colored border. A transition is included for smooth hover effects.
+ */
+.contact-button {
+    color: var(--teal);
+    background-color: transparent;
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 1rem 1.75rem;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none; /* Removes underline from anchor tags styled as buttons */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/*
+ * Defines the hover state for the contact button.
+ * Adds a subtle background color to provide visual feedback when the
+ * user's cursor is over the button.
+ */
+.contact-button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}

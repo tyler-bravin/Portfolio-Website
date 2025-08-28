@@ -1,0 +1,169 @@
+/**
+ * =================================================================================
+ * experience.css
+ * ---------------------------------------------------------------------------------
+ * This stylesheet defines the styles for the "Work Experience" section, which
+ * features a tabbed interface to switch between different job descriptions.
+ * The layout is responsive, changing from a vertical tab list on desktop to a
+ * horizontal grid on mobile.
+ * @author Tyler Bravin
+ * @date 2025-08-28
+ * =================================================================================
+ */
+
+/* --- Main Section Container --- */
+.experience {
+    padding: 100px 0;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* --- Tab Layout --- */
+
+/*
+ * Main container for the tabbed interface.
+ * Uses flexbox to position the job list (tabs) and job details (content) side-by-side.
+ */
+.experience-content {
+    display: flex;
+    gap: 30px;
+    min-height: 300px;
+}
+
+/*
+ * Container for the list of job title buttons (the tabs).
+ * Arranges tabs vertically and provides a main border track on the left.
+ */
+.job-list {
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid var(--lightest-navy);
+}
+
+/* --- Tab Buttons --- */
+
+/*
+ * Base styling for individual job buttons (tabs).
+ */
+.job-button {
+    background: none;
+    border: none;
+    color: var(--slate);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    padding: 15px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* This transparent border occupies space, preventing layout shifts when the active border appears. */
+    border-left: 2px solid transparent;
+    /* Negatively offsets the button to make its border overlap the main .job-list border. */
+    margin-left: -2px;
+}
+
+/*
+ * Hover state for inactive tabs.
+ */
+.job-button:hover {
+    background-color: var(--lightest-navy);
+    color: var(--teal);
+}
+
+/*
+ * Active state for the currently selected tab.
+ * Highlights the tab with a different background and text color,
+ * and activates the left border to act as a slider indicator.
+ */
+.job-button.active {
+    color: var(--teal);
+    border-left: 2px solid var(--teal);
+    background-color: var(--light-navy);
+}
+
+/* --- Job Details (Content Panel) --- */
+
+.job-details h3 {
+    color: var(--lightest-slate);
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+}
+
+.job-details .company {
+    color: var(--teal);
+}
+
+.job-details .date {
+    color: var(--light-slate);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.job-details ul {
+    list-style: none; /* Removes default bullet points */
+}
+
+/*
+ * Styles individual responsibility/achievement list items.
+ */
+.job-details li {
+    position: relative;
+    padding-left: 25px; /* Creates space for the custom pseudo-element bullet */
+    margin-bottom: 10px;
+    color: var(--slate);
+    line-height: 1.5;
+}
+
+/*
+ * Creates a custom bullet point using a pseudo-element for each list item.
+ */
+.job-details li::before {
+    content: "▹"; /* The character used for the bullet */
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 1.2rem;
+}
+
+
+/* --- Responsive Design for Mobile --- */
+
+/*
+ * On smaller screens (600px and below), the layout changes from a vertical
+ * tab list to a horizontal, grid-like button layout.
+ */
+@media (max-width: 600px) {
+    /* Stacks the tab list and content panel vertically */
+    .experience-content {
+        flex-direction: column;
+    }
+
+    /*
+     * Changes the job list to a horizontal, wrapping container.
+     * The main left border is removed as it's no longer needed.
+     */
+    .job-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-left: none;
+    }
+
+    /*
+     * Adapts buttons to form a two-column grid.
+     * Borders are moved from the left side to the bottom.
+     */
+    .job-button {
+        flex-grow: 1;
+        flex-basis: 40%; /* A basis less than 50% ensures a two-column layout */
+        text-align: center;
+        border-left: none;
+        border-bottom: 2px solid var(--lightest-navy);
+        margin-left: 0;
+    }
+
+    /*
+     * The active state is now indicated by the bottom border.
+     */
+    .job-button.active {
+        border-bottom: 2px solid var(--teal);
+    }
+}

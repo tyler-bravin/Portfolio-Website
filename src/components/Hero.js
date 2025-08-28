@@ -47,7 +47,7 @@ const Hero = () => {
             {/* Descriptive paragraph with a longer delay for a staggered effect. */}
             <motion.p className="hero-description" initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.8 }}>
                 I am a motivated Software Engineering student in my <span className="highlight">final year</span> at the University of Stirling, with expertise in Java, React, Python, and SQL.
-                I have demonstrated success in <span className="highlight">mobile application development</span> and <span className="highlight">efficiency optimization</span>.
+                I have demonstrated success in <span className="highlight">mobile application development</span> and <span className="highlight">efficiency optimisation</span>.
                 <br />
                 I am actively seeking a graduate role to apply my technical knowledge and contribute to impactful projects.
             </motion.p>

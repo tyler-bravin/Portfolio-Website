@@ -69,15 +69,20 @@ const Projects = () => {
                             const images = tempDiv.querySelectorAll('img');
 
                             // Extract and correct image URLs from the README.
-                            const urls = Array.from(images).map(img => {
-                                const src = img.getAttribute('src');
-                                // Check if it's a relative URL and construct a full raw path.
-                                if (!src.startsWith('http')) {
+                            const urls = Array.from(images)
+                                // Filter for images from a specific /assets folder
+                                .filter(img => {
+                                    const src = img.getAttribute('src');
+                                    // Checks for '/assets/' in the image path to filter out badges
+                                    return src && src.includes('/assets/');
+                                })
+                                // Map the remaining images to their corrected URLs
+                                .map(img => {
+                                    const src = img.getAttribute('src');
+                                    // If it's a relative URL, construct the full raw path
                                     const defaultBranch = repo.default_branch || "main";
                                     return `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repo.name}/${defaultBranch}/${src.replace(/^\//, '')}`;
-                                }
-                                return src;
-                            });
+                                });
 
                             // Return the repository object with the new `imageUrls` array.
                             return { ...repo, imageUrls: urls };

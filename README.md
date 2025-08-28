@@ -18,7 +18,7 @@ A modern, responsive personal portfolio website built with **React.js**. It's de
 * **Dynamic Theme Switching**: Easily toggle between a dark and light theme, with your preference saved in local storage.
 * **API Integration**: Fetches recent projects directly from the GitHub API, displaying key information like descriptions, technologies, and stats.
 * **Responsive Design**: The layout adapts seamlessly to a range of devices, from desktops to mobile phones.
-* **Smooth Animations**: Utilizes **Framer Motion** for subtle, professional animations and transitions on page load and scroll.
+* **Smooth Animations**: Utilises **Framer Motion** for subtle, professional animations and transitions on page load and scroll.
 * **Interactive Background**: A dynamic particle effect creates an engaging visual backdrop.
 * **Smooth Scrolling Navigation**: Navigate between sections of the site with a smooth, animated scroll.
 

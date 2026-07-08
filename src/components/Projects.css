@@ -1,187 +1,255 @@
 /**
- * =================================================================================
- * projects.css
- * ---------------------------------------------------------------------------------
- * This stylesheet defines the styles for the portfolio's projects section. It
- * primarily focuses on the layout of a horizontal, scrollable grid of project
- * cards, including styling for individual cards and their content.
- * @author Tyler Bravin
- * @date 2025-08-28
- * =================================================================================
+ * Projects.css — GitHub repo cards
  */
 
-/* --- Projects Grid --- */
-
-/*
- * The main container for the project cards.
- * `display: flex` and `overflow-x: auto` enable horizontal scrolling.
- * The custom scrollbar styles enhance the look across different browsers.
- */
-.projects-grid {
+.projects-toolbar {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: -26px;
+    margin-bottom: 26px;
+}
+
+.projects-subtitle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--faint);
+}
+
+.scroller-controls {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.scroller-btn {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    color: var(--ink);
+    font-size: 18px;
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease),
+        opacity 0.2s var(--ease);
+}
+
+.scroller-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.scroller-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* --- Horizontal scroll-snap carousel --- */
+.projects-grid {
+    display: grid;
+    grid-auto-flow: column;
+    /* three cards per view on desktop (two 22px gaps) */
+    grid-auto-columns: calc((100% - 44px) / 3);
+    gap: 22px;
     overflow-x: auto;
-    gap: 20px;
-    padding-bottom: 20px;
-    -webkit-overflow-scrolling: touch; /* Improves scrolling smoothness on iOS */
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: var(--lightest-navy) var(--navy); /* For Firefox */
+    scroll-snap-type: x mandatory;
+    /* room so hover lift + shadow aren't clipped by overflow */
+    padding: 6px 2px 14px;
+    /* hide the scrollbar — arrows + swipe are the affordance */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/*
- * Custom scrollbar styles for Webkit-based browsers (Chrome, Safari).
- * This section defines the height, track, and thumb of the scrollbar.
- */
 .projects-grid::-webkit-scrollbar {
-    height: 8px;
-}
-.projects-grid::-webkit-scrollbar-track {
-    background: var(--navy);
-    border-radius: 4px;
-}
-.projects-grid::-webkit-scrollbar-thumb {
-    background: var(--lightest-navy);
-    border-radius: 4px;
-}
-.projects-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--slate);
+    display: none;
 }
 
-/* --- Project Card --- */
+.projects-grid .project-card {
+    scroll-snap-align: start;
+}
 
-/*
- * The individual container for each project.
- * `flex: 0 0 320px` prevents the cards from growing or shrinking, giving
- * each a fixed width of 320px.
- * The `box-shadow` and `transition` properties create a clean, interactive effect.
- */
+@media (max-width: 920px) {
+    /* two cards per view on tablets */
+    .projects-grid {
+        grid-auto-columns: calc((100% - 22px) / 2);
+    }
+}
+
+@media (max-width: 640px) {
+    /* one card per view on phones, with a peek of the next to invite swiping */
+    .projects-grid {
+        grid-auto-columns: 86%;
+    }
+}
+
+/* --- Card --- */
 .project-card {
-    flex: 0 0 320px;
-    background-color: var(--light-navy);
-    border-radius: 5px;
-    box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-    transition: all 0.3s ease-in-out;
+    flex: 0 0 calc((100% - 44px) / 3);
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
-    height: auto;
+    transition: border-color 0.2s var(--ease), transform 0.25s var(--ease),
+        box-shadow 0.25s var(--ease);
 }
 
-/*
- * Hover effect for the project card, making it lift up slightly.
- */
 .project-card:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.7);
 }
 
-/* --- Project Image & Placeholder --- */
-
-/*
- * Common styles for both the project image and its placeholder.
- * `aspect-ratio` ensures the image maintains a consistent 16:9 ratio.
- */
-.project-image, .project-image-placeholder {
+.project-image {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 180px;
     object-fit: cover;
+    object-position: top;
 }
 
-/*
- * Styles for the placeholder when no image is available.
- */
 .project-image-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--navy);
-    color: var(--slate);
-    font-size: 1.5rem;
-    font-weight: 600;
+    height: 180px;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
+        var(--surface-2);
+    border-bottom: 1px solid var(--line);
 }
 
-/* --- Project Content --- */
+.project-image-placeholder span {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--faint);
+}
 
-/*
- * The internal container for the text and details of the project card.
- * `flex-grow: 1` allows it to fill the remaining vertical space.
- */
+.project-image-placeholder span::before {
+    content: '~/';
+    color: var(--accent);
+}
+
+/* --- Card body --- */
 .project-content {
-    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex: 1;
+    padding: 20px;
 }
 
-/*
- * Styling for the project title.
- */
 .project-content h3 {
-    color: var(--lightest-slate);
+    font-family: var(--font-mono);
+    font-size: 15.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-/*
- * Changes the title color on card hover.
- */
-.project-card:hover .project-content h3 {
-    color: var(--teal);
+.project-content h3::before {
+    content: '/';
+    color: var(--accent);
+    margin-right: 1px;
 }
 
-/*
- * Container for statistics like stars, forks, etc.
- * `margin-top: auto` pushes this section to the bottom of the card.
- */
-.project-stats {
-    margin-top: auto;
-    padding-top: 15px;
-    font-size: 0.85rem;
-    color: var(--slate);
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.project-content p {
+    font-size: 14.5px;
+    margin-bottom: 16px;
+    flex: 1;
 }
 
-/*
- * Styling for an individual stat item, ensuring icon and text are aligned.
- */
-.stat-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-/*
- * Styling for the list of tags/technologies.
- */
+/* Language tags (rendered by RepoLanguages) */
 .project-tags {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 15px;
-    font-size: 0.8rem;
-    color: var(--slate);
+    margin-bottom: 14px;
 }
 
-/*
- * Styling for individual tag list items.
- */
 .project-tags li {
-    background-color: var(--navy);
-    padding: 3px 8px;
-    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 9%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+    padding: 3px 9px;
+    border-radius: 99px;
 }
 
-/* --- Misc. Overrides --- */
-
-/*
- * Overrides for the `react-responsive-carousel` library styles
- * to make sure images within a carousel fit the card's dimensions.
- */
-.carousel .slide img {
-    height: 100%;
+.project-stats {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--faint);
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
 }
 
-.carousel.carousel-slider .control-arrow {
-    opacity: 0.6;
+.stat-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- Loading state --- */
+.projects-loading {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--faint);
+    padding: 30px 0;
+}
+
+.loading-dots::after {
+    content: '...';
+    animation: dots 1.4s steps(4, end) infinite;
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+@keyframes dots {
+    to { width: 1.4em; }
+}
+
+/* --- Carousel overrides (react-responsive-carousel) --- */
+.project-card .carousel .control-dots .dot {
+    background: var(--ink);
+    box-shadow: none;
+}
+
+.project-card .carousel .slide {
+    background: var(--surface-2);
+}
+
+@media (max-width: 480px) {
+    .projects-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+
+/* --- Carousel breakpoints --- */
+@media (max-width: 1024px) {
+    .project-card {
+        flex-basis: calc((100% - 22px) / 2);
+    }
+}
+
+@media (max-width: 640px) {
+    .project-card {
+        /* one card per view, with a peek of the next as a swipe hint */
+        flex-basis: 85%;
+    }
+
+    .projects-toolbar {
+        margin-top: -8px;
+    }
 }

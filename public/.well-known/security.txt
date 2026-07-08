@@ -1,0 +1,7 @@
+# security.txt — RFC 9116
+# Vulnerability disclosure contact for tylerbravin.dev
+
+Contact: mailto:tylerbravin02@gmail.com
+Expires: 2027-07-31T23:59:59Z
+Preferred-Languages: en
+Canonical: https://tylerbravin.dev/.well-known/security.txt

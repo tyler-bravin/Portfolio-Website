@@ -9,15 +9,24 @@
  */
 
 // --- Imports ---
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion'; // For scroll-triggered animations
 import { DiGitMerge } from 'react-icons/di'; // Icon for forks
 import { AiFillStar } from 'react-icons/ai'; // Icon for stars
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'; // Scroller controls
 import RepoLanguages from './RepoLanguages'; // A component to show repo languages
 import ProjectModal from './ProjectModal'; // The modal for detailed project views
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styles
 import { Carousel } from 'react-responsive-carousel'; // A library for image carousels
-import './Projects.css'; // Component-specific styles
+import FeaturedProject from './FeaturedProject';
+import './Projects.css';
+
+// Only send an auth header if a token is configured — unauthenticated
+// requests still work within GitHub's rate limits.
+const GH_HEADERS = import.meta.env.VITE_GITHUB_TOKEN
+    ? { Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}` }
+    : {};
+ // Component-specific styles
 
 /**
  * The Projects component fetches a list of repositories from GitHub and
@@ -33,6 +42,33 @@ const Projects = () => {
     const [loading, setLoading] = useState(true);
     // State to store the currently selected repository to display in the modal.
     const [selectedRepo, setSelectedRepo] = useState(null);
+    // Ref + edge state for the horizontal card scroller.
+    const scrollerRef = useRef(null);
+    const [atStart, setAtStart] = useState(true);
+    const [atEnd, setAtEnd] = useState(false);
+
+    // Track whether the scroller is at either edge (to disable arrows).
+    const updateEdges = useCallback(() => {
+        const el = scrollerRef.current;
+        if (!el) return;
+        setAtStart(el.scrollLeft <= 4);
+        setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+    }, []);
+
+    useEffect(() => {
+        updateEdges();
+        window.addEventListener('resize', updateEdges);
+        return () => window.removeEventListener('resize', updateEdges);
+    }, [updateEdges, repos]);
+
+    // Scroll by one card (including the grid gap).
+    const scrollByCard = (dir) => {
+        const el = scrollerRef.current;
+        if (!el) return;
+        const card = el.querySelector('.project-card');
+        const step = card ? card.offsetWidth + 22 : el.clientWidth;
+        el.scrollBy({ left: dir * step, behavior: 'smooth' });
+    };
     // The GitHub username to fetch repositories for.
     const GITHUB_USERNAME = "tyler-bravin";
 
@@ -42,7 +78,7 @@ const Projects = () => {
             try {
                 // Fetch the user's public repositories, sorted by most recently updated.
                 const repoResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&direction=desc`, {
-                    headers: { Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}` },
+                    headers: GH_HEADERS,
                 });
                 let reposData = await repoResponse.json();
                 // Filter out forked repositories and take the first 6.
@@ -55,7 +91,7 @@ const Projects = () => {
                             // Fetch the README for each repository.
                             const readmeResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/readme`, {
                                 headers: {
-                                    Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+                                    ...GH_HEADERS,
                                     Accept: 'application/vnd.github.v3.html+json',
                                 },
                             });
@@ -63,10 +99,10 @@ const Projects = () => {
                             if (!readmeResponse.ok) return { ...repo, imageUrls: [] };
                             const readmeHtml = await readmeResponse.text();
 
-                            // Create a temporary DOM element to parse the HTML and find image tags.
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = readmeHtml;
-                            const images = tempDiv.querySelectorAll('img');
+                            // Parse with DOMParser: unlike innerHTML on a div, this
+                            // does NOT eagerly fetch images with relative (broken) paths.
+                            const doc = new DOMParser().parseFromString(readmeHtml, 'text/html');
+                            const images = doc.querySelectorAll('img');
 
                             // Extract and correct image URLs from the README.
                             const urls = Array.from(images)
@@ -106,15 +142,42 @@ const Projects = () => {
 
     // Conditional rendering: show a loading message if data is still being fetched.
     if (loading) {
-        return <div className="loader">Loading Projects...</div>;
+        return <section className="projects" id="projects">
+            <span className="section-eyebrow">{'// projects'}</span>
+            <h2 className="section-title">Recent work</h2>
+            <div className="projects-loading">fetching repositories<span className="loading-dots" /></div>
+        </section>;
     }
 
     return (
         <>
             <section className="projects" id="projects">
-                <h2 className="section-title">My Recent Projects</h2>
-                {/* The horizontally-scrolling grid container. */}
-                <div className="projects-grid">
+                <span className="section-eyebrow">{'// projects'}</span>
+                <h2 className="section-title">Recent work</h2>
+                <FeaturedProject />
+                <div className="projects-toolbar">
+                    <p className="projects-subtitle">More from GitHub — pulled live, click a card for the full README.</p>
+                    <div className="scroller-controls" aria-hidden={repos.length < 2}>
+                        <button
+                            className="scroller-btn"
+                            onClick={() => scrollByCard(-1)}
+                            disabled={atStart}
+                            aria-label="Previous projects"
+                        >
+                            <FiChevronLeft />
+                        </button>
+                        <button
+                            className="scroller-btn"
+                            onClick={() => scrollByCard(1)}
+                            disabled={atEnd}
+                            aria-label="Next projects"
+                        >
+                            <FiChevronRight />
+                        </button>
+                    </div>
+                </div>
+                {/* Horizontal scroll-snap carousel: swipe on touch, arrows on desktop. */}
+                <div className="projects-grid" ref={scrollerRef} onScroll={updateEdges}>
                     {/* Map through the fetched repositories to create a card for each. */}
                     {repos.map((repo, index) => (
                         <motion.div
@@ -131,7 +194,7 @@ const Projects = () => {
                             {repo.imageUrls && repo.imageUrls.length > 0 ? (
                                 // A carousel for projects with images.
                                 <div onClick={(e) => e.stopPropagation()}>
-                                    <Carousel showThumbs={false} showStatus={false} infiniteLoop autoPlay>
+                                    <Carousel showThumbs={false} showStatus={false} infiniteLoop autoPlay swipeable={false} emulateTouch={false}>
                                         {repo.imageUrls.map((url, i) => (
                                             <div key={i}>
                                                 <img src={url} alt={`${repo.name} preview ${i + 1}`} className="project-image" />

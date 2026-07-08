@@ -10,6 +10,11 @@
 // --- Imports ---
 import React, { useState, useEffect } from 'react';
 
+const GH_HEADERS = import.meta.env.VITE_GITHUB_TOKEN
+    ? { Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}` }
+    : {};
+
+
 /**
  * The RepoLanguages component fetches the languages for a given repository URL
  * and renders them as an unordered list of tags.
@@ -28,9 +33,7 @@ const RepoLanguages = ({ languagesUrl }) => {
             try {
                 // Fetch the languages data from the provided GitHub API URL.
                 const response = await fetch(languagesUrl, {
-                    headers: {
-                        Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
-                    },
+                    headers: GH_HEADERS,
                 });
                 const data = await response.json();
                 // Get the keys (language names) from the data object and take the top 3.

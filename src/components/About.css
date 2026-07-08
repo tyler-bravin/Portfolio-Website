@@ -1,116 +1,68 @@
 /**
- * =================================================================================
- * about.css
- * ---------------------------------------------------------------------------------
- * This stylesheet contains the styling for the "About Me" section of the website.
- * It handles the layout, typography, and skill-list presentation.
- * @author Tyler Bravin
- * @date 2025-08-28
- * =================================================================================
+ * About.css — background copy + grouped skills grid
  */
 
-/* --- Main Section Container --- */
-
-/*
- * Styles for the main 'About' section wrapper.
- * Sets vertical padding, a maximum width for readability on large screens,
- * and centers the container horizontally.
- */
-.about {
-    padding: 100px 0;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* --- Section Layout & Content --- */
-
-/*
- * Defines a two-column grid layout for the about section content.
- * The first column (text) is 1.5 times wider than the second column (skills).
- * A gap is added for spacing between the grid items.
- */
 .about-content {
     display: grid;
-    /* Defines a 3-fraction to 2-fraction column layout */
-    grid-template-columns: 3fr 2fr;
-    gap: 50px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
 }
 
-/*
- * Styles the paragraph text within the 'about' section.
- * Sets bottom margin for spacing between paragraphs, improves line-height
- * for readability, and applies a standard text color.
- */
 .about-text p {
-    margin-bottom: 15px;
-    line-height: 1.6;
-    color: var(--light-slate);
+    margin-bottom: 18px;
+    max-width: 560px;
 }
 
+.about-text p:last-child {
+    margin-bottom: 0;
+}
 
-/* --- Skills List --- */
-
-/*
- * Styles the unordered list used for displaying skills.
- * Removes default list bullets and arranges skills in a responsive two-column grid.
- * Each column has a minimum width of 140px and a maximum of 200px.
- */
-.about-skills ul {
-    list-style: none;
+/* --- Skills grid --- */
+.about-skills {
     display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    gap: 15px;
-    font-size: 0.95rem;
-    color: var(--light-slate);
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-/*
- * Styles individual skill items within the list.
- * Uses flexbox to vertically align the skill icon and text.
- */
-.about-skills li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.skill-group {
+    background: var(--surface);
+    padding: 20px;
 }
 
-
-/* --- Skill Icons --- */
-
-/*
- * Base styles applied to all technology icons in the skills list.
- */
-.skill-icon {
-    font-size: 1.8rem;
-    display: flex;        /* Ensures proper alignment if the icon is wrapped */
-    align-items: center;  /* Vertically centers the icon */
+.skill-group-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
 }
 
-/*
- * Applies official brand colors to specific technology icons.
- * This improves visual recognition for each skill.
- */
-.skill-icon.java { color: #f89820; }
-.skill-icon.python { color: #3776AB; }
-.skill-icon.react { color: #61DAFB; }
-.skill-icon.javascript { color: #F7DF1E; }
-.skill-icon.html5 { color: #E34F26; }
-.skill-icon.css3 { color: #1572B6; }
-.skill-icon.git { color: #F05032; }
-.skill-icon.csharp { color: #9B4F96; }
-.skill-icon.cpp { color: #00599C; }
+.skill-group ul {
+    list-style: none;
+}
 
+.skill-group li {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink);
+    padding: 3.5px 0;
+}
 
-/* --- Responsive Design --- */
-
-/*
- * Media query for tablet and mobile devices (768px and below).
- * Stacks the two columns of the about section vertically for better
- * readability on smaller screens.
- */
-@media (max-width: 768px) {
+@media (max-width: 920px) {
     .about-content {
-        grid-template-columns: 1fr; /* Switch to a single-column layout */
-        gap: 30px;
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-skills {
+        grid-template-columns: 1fr;
     }
 }

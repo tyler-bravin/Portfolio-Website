@@ -1,6 +1,6 @@
 {
-  "name": "Tyler Bravin - Portfolio",
-  "short_name": "Portfolio",
+  "name": "Tyler Bravin \u2014 Software Engineer",
+  "short_name": "tylerbravin.dev",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#0e1327",
-  "background_color": "#ffffff",
+  "theme_color": "#0e0e11",
+  "background_color": "#0e0e11",
   "display": "standalone"
 }

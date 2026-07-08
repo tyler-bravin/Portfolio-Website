@@ -14,6 +14,11 @@ import { motion, AnimatePresence } from 'framer-motion'; // For modal animations
 import { FiX, FiGithub } from 'react-icons/fi'; // Feather Icons for close and GitHub buttons
 import './ProjectModal.css'; // Component-specific styles
 
+const GH_HEADERS = import.meta.env.VITE_GITHUB_TOKEN
+    ? { Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}` }
+    : {};
+
+
 /**
  * The ProjectModal component fetches and displays the README content from a
  * specified GitHub repository within a modal window.
@@ -42,7 +47,7 @@ const ProjectModal = ({ repo, onClose }) => {
                     `https://api.github.com/repos/${repo.owner.login}/${repo.name}/readme`,
                     {
                         headers: {
-                            Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+                            ...GH_HEADERS,
                             Accept: 'application/vnd.github.v3.html+json',
                         },
                     }
@@ -50,10 +55,10 @@ const ProjectModal = ({ repo, onClose }) => {
 
                 let html = await readmeResponse.text();
 
-                // Create a temporary element to parse the HTML and fix relative image paths.
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const images = Array.from(tempDiv.querySelectorAll('img'));
+                // Parse with DOMParser so relative image paths aren't fetched
+                // before we've had a chance to correct them.
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const images = Array.from(doc.querySelectorAll('img'));
 
                 // Loop through all image elements to correct their `src` attributes.
                 images.forEach((img) => {
@@ -67,7 +72,7 @@ const ProjectModal = ({ repo, onClose }) => {
                 });
 
                 // Set the corrected HTML to the state.
-                setReadmeHtml(tempDiv.innerHTML);
+                setReadmeHtml(doc.body.innerHTML);
             } catch (err) {
                 console.error(err);
                 setReadmeHtml('<p>Could not load README for this project.</p>');

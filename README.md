@@ -6,7 +6,7 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://github.com/tyler-bravin/Portfolio-Website/blob/master/LICENSE)
 
-A modern, responsive personal portfolio website built with **React.js**. It's designed to showcase skills, experience, and projects in a clean and visually engaging way. The site features smooth animations, a dark/light theme toggle, and dynamically fetches project data directly from the GitHub API.
+A personal portfolio website built with **React.js**, designed around an "engineering workstation" aesthetic — graphite surfaces, an amber terminal accent, and a monospace-led type system. It features a fastfetch-style system readout, a dark/light theme toggle, and dynamically fetches project data directly from the GitHub API.
 
 <br>
 
@@ -16,18 +16,22 @@ A modern, responsive personal portfolio website built with **React.js**. It's de
 
 ### ✨ Key Features
 * **Dynamic Theme Switching**: Easily toggle between a dark and light theme, with your preference saved in local storage.
+* **System Readout Hero**: A fastfetch-style terminal panel summarising who I am — a nod to my daily-driver Linux setup.
+* **Interactive Terminal**: The readout prompt actually works — try `help`, `cd projects`, or `sudo` and see what happens.
+* **Featured Case Study**: A hand-written deep dive into Study Hub (built under the ForthByte org), covering the real-time architecture.
+* **Scrollspy Navigation**: The header highlights whichever section is currently on screen.
 * **API Integration**: Fetches recent projects directly from the GitHub API, displaying key information like descriptions, technologies, and stats.
 * **Responsive Design**: The layout adapts seamlessly to a range of devices, from desktops to mobile phones.
 * **Smooth Animations**: Utilises **Framer Motion** for subtle, professional animations and transitions on page load and scroll.
-* **Interactive Background**: A dynamic particle effect creates an engaging visual backdrop.
 * **Smooth Scrolling Navigation**: Navigate between sections of the site with a smooth, animated scroll.
 
 ---
 
 ### 💻 Technologies Used
 * **Frontend**: React.js, HTML5, CSS3, JavaScript
+* **Build Tooling**: Vite
 * **Styling & Theming**: CSS Custom Properties (Variables), Responsive CSS
-* **Animation**: `framer-motion`, `particles.js`
+* **Animation**: `framer-motion`
 * **Icons**: `react-icons`
 * **API Integration**: GitHub REST API
 * **Other Libraries**: `react-responsive-carousel` for image slideshows
@@ -55,15 +59,21 @@ Follow these steps to get a local copy of the project up and running.
     * Create a file named `.env` in the root of your project.
     * Add your GitHub token to the file in the following format:
         ```env
-        REACT_APP_GITHUB_TOKEN=your_personal_access_token_here
+        VITE_GITHUB_TOKEN=your_personal_access_token_here
         ```
     > **Note:** Make sure your token has at least the `public_repo` scope to access repository data. For security, never share this file or commit it to your repository. You can follow [GitHub's official guide to create a Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
 
 4.  **Start the development server:**
     ```bash
-    npm start
+    npm run dev
     ```
     The application will now be running on `http://localhost:3000`.
+
+5.  **Build for production:**
+    ```bash
+    npm run build
+    ```
+    The optimised output is written to `dist/`, and `npm run preview` serves it locally.
 
 ### 📜 License
 This project is licensed under the MIT License. See the `LICENSE` file for details.

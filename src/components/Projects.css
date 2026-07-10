@@ -71,6 +71,7 @@
 }
 
 .projects-grid .project-card {
+    min-width: 0;
     scroll-snap-align: start;
 }
 
@@ -304,7 +305,13 @@
 }
 
 .fork-card {
-    flex: 0 0 calc((100% - 42px) / 4);
+    /* three per view: matches the repo carousel above, keeps card text
+       readable, and with 4+ forks the arrows have something to do */
+    flex: 0 0 calc((100% - 28px) / 3);
+    /* flex items refuse to shrink below their longest unbreakable word
+       (min-width: auto) — long repo paths were inflating cards past their
+       basis and overflowing the track */
+    min-width: 0;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
@@ -323,6 +330,7 @@
 }
 
 .fork-name {
+    overflow-wrap: anywhere;
     font-family: var(--font-mono);
     font-size: 13.5px;
     font-weight: 700;
@@ -338,7 +346,8 @@
     font-family: var(--font-mono);
     font-size: 11.5px;
     color: var(--accent);
-    overflow-wrap: break-word;
+    /* 'anywhere' (unlike 'break-word') also reduces min-content width */
+    overflow-wrap: anywhere;
 }
 
 .fork-desc {

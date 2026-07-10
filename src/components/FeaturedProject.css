@@ -36,6 +36,7 @@
 
 .featured {
     flex: 0 0 100%;
+    min-width: 0;
     scroll-snap-align: start;
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);

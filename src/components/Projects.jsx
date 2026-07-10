@@ -40,7 +40,7 @@ const Projects = () => {
     // State to store the fetched repositories.
     const [repos, setRepos] = useState([]);
     const [forks, setForks] = useState([]);
-    const forksScroller = useSnapScroller(forks.length);
+    const forksScroller = useSnapScroller();
     // State to track if the data is currently being loaded.
     const [loading, setLoading] = useState(true);
     // State to store the currently selected repository to display in the modal.

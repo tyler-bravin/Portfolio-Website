@@ -19,6 +19,7 @@ import ProjectModal from './ProjectModal'; // The modal for detailed project vie
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styles
 import { Carousel } from 'react-responsive-carousel'; // A library for image carousels
 import FeaturedProject from './FeaturedProject';
+import { useSnapScroller } from '../hooks/useSnapScroller';
 import './Projects.css';
 
 // Only send an auth header if a token is configured — unauthenticated
@@ -38,6 +39,8 @@ const GH_HEADERS = import.meta.env.VITE_GITHUB_TOKEN
 const Projects = () => {
     // State to store the fetched repositories.
     const [repos, setRepos] = useState([]);
+    const [forks, setForks] = useState([]);
+    const forksScroller = useSnapScroller(forks.length);
     // State to track if the data is currently being loaded.
     const [loading, setLoading] = useState(true);
     // State to store the currently selected repository to display in the modal.
@@ -80,9 +83,30 @@ const Projects = () => {
                 const repoResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&direction=desc`, {
                     headers: GH_HEADERS,
                 });
-                let reposData = await repoResponse.json();
+                const allRepos = await repoResponse.json();
+
+                // Forks get their own compact strip. The list endpoint doesn't
+                // include the upstream parent, so fetch each fork's detail —
+                // tolerating failures (rate limits) by falling back to no
+                // attribution rather than hiding the fork.
+                const forkRepos = allRepos.filter(repo => repo.fork).slice(0, 6);
+                Promise.all(
+                    forkRepos.map(async (repo) => {
+                        try {
+                            const detail = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}`, {
+                                headers: GH_HEADERS,
+                            });
+                            if (!detail.ok) return repo;
+                            const full = await detail.json();
+                            return { ...repo, parent: full.parent };
+                        } catch {
+                            return repo;
+                        }
+                    })
+                ).then(setForks);
+
                 // Filter out forked repositories and take the first 6.
-                reposData = reposData.filter(repo => !repo.fork).slice(0, 6);
+                let reposData = allRepos.filter(repo => !repo.fork).slice(0, 6);
 
                 // Use `Promise.all` to fetch READMEs and images for all repos in parallel.
                 const reposWithImages = await Promise.all(
@@ -223,6 +247,64 @@ const Projects = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* --- Forks: other people's code I've tinkered with --- */}
+                {forks.length > 0 && (
+                    <div className="forks-strip">
+                        <div className="forks-header">
+                            <div>
+                                <h3 className="forks-heading">Tinkering</h3>
+                                <p className="forks-subtitle">
+                                    {'// forks — other people\'s projects I\'ve messed around with'}
+                                </p>
+                            </div>
+                            {forksScroller.scrollable && (
+                                <div className="scroller-controls">
+                                    <button
+                                        className="scroller-btn"
+                                        onClick={() => forksScroller.scrollByItem(-1)}
+                                        disabled={forksScroller.atStart}
+                                        aria-label="Previous forks"
+                                    >
+                                        <FiChevronLeft />
+                                    </button>
+                                    <button
+                                        className="scroller-btn"
+                                        onClick={() => forksScroller.scrollByItem(1)}
+                                        disabled={forksScroller.atEnd}
+                                        aria-label="Next forks"
+                                    >
+                                        <FiChevronRight />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                        <div className="forks-grid" ref={forksScroller.ref}>
+                            {forks.map((repo) => (
+                                <a
+                                    key={repo.id}
+                                    className="fork-card"
+                                    href={repo.html_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <span className="fork-name">{repo.name}</span>
+                                    {repo.parent && (
+                                        <span className="fork-parent">
+                                            forked from {repo.parent.full_name}
+                                        </span>
+                                    )}
+                                    {repo.description && (
+                                        <span className="fork-desc">{repo.description}</span>
+                                    )}
+                                    {repo.language && (
+                                        <span className="fork-lang">{repo.language}</span>
+                                    )}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </section>
 
             {/*

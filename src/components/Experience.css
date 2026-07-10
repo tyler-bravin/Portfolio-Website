@@ -87,29 +87,32 @@
         gap: 28px;
     }
 
+    /* Wrapping pills instead of a horizontal scroller: with five employers,
+       showing all of them beats hiding some behind a swipe. */
     .job-list {
         flex-direction: row;
-        overflow-x: auto;
+        flex-wrap: wrap;
+        gap: 8px;
         border-left: none;
-        border-bottom: 1px solid var(--line);
-        padding-bottom: 0;
-        /* no visible scrollbar — the right-edge fade hints at more tabs */
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-mask-image: linear-gradient(to right, black calc(100% - 44px), transparent);
-        mask-image: linear-gradient(to right, black calc(100% - 44px), transparent);
-    }
-
-    .job-list::-webkit-scrollbar {
-        display: none;
     }
 
     .job-button {
-        border-left: none;
-        border-bottom: 2px solid transparent;
+        border: 1px solid var(--line-strong);
+        border-radius: 99px;
         margin-left: 0;
-        margin-bottom: -1.5px;
-        padding: 11px 14px;
+        padding: 8px 15px;
+        white-space: nowrap;
+    }
+
+    .job-button:hover {
+        background: none;
+        border-color: var(--faint);
+    }
+
+    .job-button.active {
+        color: var(--accent);
+        border-color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 8%, transparent);
     }
 
     .job-button.active {

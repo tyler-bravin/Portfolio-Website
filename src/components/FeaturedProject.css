@@ -2,7 +2,41 @@
  * FeaturedProject.css — Study Hub case study card
  */
 
+.featured-carousel {
+    margin-bottom: 48px;
+}
+
+.featured-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.featured-counter {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--faint);
+}
+
+.featured-track {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.featured-track::-webkit-scrollbar {
+    display: none;
+}
+
 .featured {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 0;
@@ -10,7 +44,6 @@
     border: 1px solid var(--line-strong);
     border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 48px;
 }
 
 .featured-main {
@@ -178,4 +211,9 @@
     .featured-notes dl {
         padding: 14px 20px;
     }
+}
+
+/* Status variants: shipped gets the green "live" dot */
+.featured-status-shipped .featured-status-dot {
+    background: var(--ok);
 }

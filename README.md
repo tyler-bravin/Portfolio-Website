@@ -11,7 +11,7 @@ A personal portfolio website built with **React** and **Vite**, designed around 
 
 <br>
 
-<img src="assets/Website-Dark.png" alt="A screenshot of the portfolio website with a dark theme">
+<img src="./assets/Website-Dark.png" alt="A screenshot of the portfolio website with a dark theme">
 
 ---
 
